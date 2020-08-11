@@ -123,6 +123,10 @@
           }
         }
       }
-    }},
-  "defaultProject": "moviest-best-movies"
+    }
+  },
+  "defaultProject": "moviest-best-movies",
+  "cli": {
+    "analytics": "11d5d947-2ab4-4379-9ed8-c4cd862c8505"
+  }
 }

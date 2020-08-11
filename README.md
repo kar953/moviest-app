@@ -1,27 +1,55 @@
-# MoviestBestMovies
+# Movies Application
+## Scenario:
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 10.0.5.
+You have a great idea for a new movies collection application. Your new site will be based on angular application which it will contain the below features:
 
-## Development server
+### Application should contain the below features:
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+- **Movies List**
+  - List Movies.
+  - Search.
+  - Clicking on a particular movie will redirect you to the selected &#39;movie detail&#39; page.
+- **Movie detail**
+  - Show selected movie detail information.
+  - Navigate back to &#39;movie list&#39;.
 
-## Code scaffolding
+Pages should have proper urls and navigation should work as expected:
+  * using the back and forward button of the browser should take to the correct page
+  * reloading the current page should work as expected
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+#### Technologies required
 
-## Build
+- [Angular](https://angular.io/)
+- [TypeScript](https://www.typescriptlang.org/)
+- [Rxjs](https://github.com/ReactiveX/rxjs)
+- [NGRx](https://ngrx.io/) for state management
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
+You may use any 3rd party libraries which can facilitate your development.
 
-## Running unit tests
+#### Extra Credit
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+- Filter by Genre.
+- Unit tests.
+- Polished design.
+- Responsive design.
 
-## Running end-to-end tests
+If you get the demo in good shape and have extra time, add your own flair and features.
 
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
+#### Content
 
-## Further help
+- Together with this readme file, you will find ` **content** ` folder which contains helpful content for your application:
+  - Movies mock data.
+  - Movies cover images.
+  - Basic movies model.
+- Feel free to modify movies content.
+- Feel free to modify movies model file.
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+#### Deliverable
+
+- Provide a working application.
+- Provide source code in a public Git, Stash or Bitbucket repository.
+- Provide markdown readme file.
+  - General information about the app.
+  - Provide steps how to build/launch your application.
+
+Good luck and have fun!
