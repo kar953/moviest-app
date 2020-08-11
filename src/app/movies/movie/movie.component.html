@@ -1,1 +1,12 @@
 <p>movie works!</p>
+<div *ngIf="movie">
+  <div>{{movie.key}}</div>
+  <div>{{movie.name}}</div>
+  <div>{{movie.description}}</div>
+  <div>{{movie.genres}}</div>
+  <div>{{movie.rate}}</div>
+  <div>{{movie.length}}</div>
+  <div>
+    <img [src]="movie.img" [alt]="movie.name">
+  </div>
+</div>
