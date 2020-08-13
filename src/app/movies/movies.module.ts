@@ -3,15 +3,13 @@ import { CommonModule } from '@angular/common';
 import { MovieComponent } from './movie/movie.component';
 import { MoviesListComponent } from './movies-list/movies-list.component';
 
-
-
 @NgModule({
   declarations: [
     MovieComponent,
     MoviesListComponent
   ],
   imports: [
-    CommonModule
+    CommonModule,
   ],
   exports: [
     MovieComponent,
