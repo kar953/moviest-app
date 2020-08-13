@@ -1,9 +1,14 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { MovieComponent } from './movies/movie/movie.component';
+import { MoviesListComponent } from './movies/movies-list/movies-list.component';
+import { MovieItemComponent } from './movies/movie-item/movie-item.component';
+import { MovieDetailsComponent } from './movies/movie-details/movie-details.component';
 
 const routes: Routes = [
-  { path: 'movie', component: MovieComponent }
+  { path: '', component: MoviesListComponent },
+  { path: 'movies', component: MoviesListComponent },
+  { path: 'movie/:id', component: MovieDetailsComponent },
+  { path: '**', component: MoviesListComponent },
 ];
 
 @NgModule({
