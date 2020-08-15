@@ -23,7 +23,7 @@ export class MovieDetailsComponent implements OnInit {
   public backToMovies(movie: MovieModel): void {
     const movieId = movie ? movie.id : null;
 
-    this.router.navigate([`/movies/${movieId}`]);
+    this.router.navigate([`/movies`]);
   }
 
 }

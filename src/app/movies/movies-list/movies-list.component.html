@@ -1,3 +1,13 @@
-<div *ngFor="let movie of movies$ | async">
-  <app-movie-item (click)="goToDetails(movie)" [movie]="movie"></app-movie-item>
-</div>
+  <mat-form-field>
+    <input autofocus class="search" type="text" placeholder="Find movie" matInput [formControl]="moviesControl" [matAutocomplete]="auto"
+      #trigger="matAutocompleteTrigger" (keydown.enter)="$event.target.blur(); trigger.closePanel()" (keyup)="showOptions($event)">
+    <mat-autocomplete #auto="matAutocomplete">
+      <mat-option *ngFor="let movie of filteredMovies | async" [value]="movie.name" (click)="goToDetails(movie)" (onSelectionChange)="goToDetails(movie)"
+      [ngClass]="{'hide-autocomplete': !showAutocomplete}">
+        {{movie.name}}
+      </mat-option>
+    </mat-autocomplete>
+  </mat-form-field>
+  <div *ngFor="let movie of filteredMovies | async">
+    <app-movie-item (click)="goToDetails(movie)" (keydown.enter)="goToDetails(movie)" [movie]="movie" tabindex="1"></app-movie-item>
+  </div>

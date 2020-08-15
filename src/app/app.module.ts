@@ -6,6 +6,8 @@ import { AppComponent } from './app.component';
 import { MoviesListComponent } from './movies/movies-list/movies-list.component';
 import { MoviesModule } from './movies/movies.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { AngularMaterialModule } from './angular-material.module';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -15,7 +17,10 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     BrowserModule,
     AppRoutingModule,
     MoviesModule,
-    BrowserAnimationsModule
+    AngularMaterialModule,
+    BrowserAnimationsModule,
+    ReactiveFormsModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
