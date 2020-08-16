@@ -1,5 +1,12 @@
 <div *ngIf="movie$ | async as movie">
   <div>{{movie.name}}</div>
+  <div>
+    <span class="material-icons-outlined"
+    [ngClass]="{'favourite': inFavourites}"
+    (click)="addToFavourites(movie.id)">
+      grade
+    </span>
+  </div>
   <div>{{movie.description}}</div>
   <div>{{movie.genres}}</div>
   <div>{{movie.rate}}</div>

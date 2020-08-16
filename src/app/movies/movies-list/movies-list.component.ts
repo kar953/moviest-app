@@ -43,6 +43,5 @@ export class MoviesListComponent implements OnInit {
 
   public showOptions(event: any): void {
     (event.target.value).length > 0 ? this.showAutocomplete = true : this.showAutocomplete = false;
-    console.log(this.showAutocomplete);
   }
 }
