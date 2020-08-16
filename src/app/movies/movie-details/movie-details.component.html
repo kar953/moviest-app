@@ -1,9 +1,7 @@
 <div *ngIf="movie$ | async as movie">
   <div>{{movie.name}}</div>
   <div>
-    <span class="material-icons-outlined"
-    [ngClass]="{'favourite': inFavourites}"
-    (click)="addToFavourites(movie.id)">
+    <span class="material-icons-outlined" [ngClass]="{'favourite': inFavourites}" (click)="updateFavourite(movie.id)">
       grade
     </span>
   </div>

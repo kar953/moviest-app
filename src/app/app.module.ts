@@ -8,6 +8,8 @@ import { MoviesModule } from './movies/movies.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AngularMaterialModule } from './angular-material.module';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { StoreModule } from '@ngrx/store';
+import { favouriteMoviesReducer } from './reducers/favourite-movies.reducer';
 
 @NgModule({
   declarations: [
@@ -20,7 +22,10 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
     AngularMaterialModule,
     BrowserAnimationsModule,
     ReactiveFormsModule,
-    FormsModule
+    FormsModule,
+    StoreModule.forRoot({
+      favouriteMovies: favouriteMoviesReducer,
+    })
   ],
   providers: [],
   bootstrap: [AppComponent]

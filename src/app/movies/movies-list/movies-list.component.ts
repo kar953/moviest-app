@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild, ViewChildren, OnChanges, SimpleChanges } 
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
-import { MovieModel } from '../../models/movie.model';
+import { Movie } from '../../models/movie.model';
 import { MoviesService } from '../../services/movies.service';
 import { FormControl } from '@angular/forms';
 
@@ -14,11 +14,11 @@ import { FormControl } from '@angular/forms';
 export class MoviesListComponent implements OnInit {
   public selectedId: number;
   public moviesControl = new FormControl();
-  public filteredMovies: Observable<MovieModel[]>;
-  public movies: MovieModel[];
+  public filteredMovies: Observable<Movie[]>;
+  public movies: Movie[];
   public showAutocomplete = false;
 
-  private _filter(value: string): MovieModel[] {
+  private _filter(value: string): Movie[] {
     const filterValue = value.toLowerCase();
     return this.movies.filter(movie => (movie.name).toLowerCase().startsWith(filterValue));
   }
@@ -35,7 +35,7 @@ export class MoviesListComponent implements OnInit {
       );
   }
 
-  public goToDetails(movie: MovieModel ): void {
+  public goToDetails(movie: Movie ): void {
     this.selectedId = movie ? movie.id : null;
 
     this.router.navigate([`/movie/${this.selectedId}`]);

@@ -5,8 +5,6 @@ import { Subject } from 'rxjs';
 export abstract class BaseComponentDirective implements OnDestroy {
   protected destroyed$ = new Subject<void>();
 
-  constructor() {}
-
   public ngOnDestroy(): void {
     this.destroyed$.next();
     this.destroyed$.complete();

@@ -1,4 +1,4 @@
-import { MovieModel } from '../models/movie.model';
+import { Movie } from '../models/movie.model';
 import { genreType } from '../models/genre-type.model';
 
 export const MOVIES = [

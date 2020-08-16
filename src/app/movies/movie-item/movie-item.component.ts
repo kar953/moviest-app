@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, ChangeDetectionStrategy } from '@angular/core';
-import { MovieModel } from '../../models/movie.model';
+import { Movie } from '../../models/movie.model';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { Observable } from 'rxjs';
 import { MoviesService } from '../../services/movies.service';
@@ -12,6 +12,6 @@ import { MoviesService } from '../../services/movies.service';
 })
 export class MovieItemComponent {
 
-  @Input() movie: MovieModel;
+  @Input() movie: Movie;
 
 }
