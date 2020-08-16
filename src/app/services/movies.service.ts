@@ -17,7 +17,4 @@ export class MoviesService {
   getMovie(id: number): Observable<Movie>{
     return of(MOVIES.find( movie => movie.id === id));
   }
-
-  getFavourites(): Observable<FavouriteMovie[]> {
-    return of(FAVOURITES);
-  }}
+}

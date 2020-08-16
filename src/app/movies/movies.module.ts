@@ -1,11 +1,15 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { MoviesListComponent } from './movies-list/movies-list.component';
-import { MovieItemComponent } from './movie-item/movie-item.component';
 import { MovieDetailsComponent } from './movie-details/movie-details.component';
-import { AngularMaterialModule } from '../angular-material.module';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { ReactiveFormsModule } from '@angular/forms';
+import { SharedModule } from '../shared/shared-module.module';
+import { MovieItemComponent } from './movies-list/movie-item/movie-item.component';
+import { RouterModule } from '@angular/router';
+
+const routes = [
+  { path: '', component: MoviesListComponent },
+  { path: 'moviesList', component: MoviesListComponent },
+  { path: 'movie/:id', component: MovieDetailsComponent }
+];
 
 @NgModule({
   declarations: [
@@ -14,16 +18,13 @@ import { ReactiveFormsModule } from '@angular/forms';
     MovieDetailsComponent
   ],
   imports: [
-    CommonModule,
-    AngularMaterialModule,
-    BrowserAnimationsModule,
-    ReactiveFormsModule,
+    SharedModule,
+    RouterModule.forChild(routes)
   ],
   exports: [
     MovieItemComponent,
     MoviesListComponent,
-    MovieDetailsComponent,
-    AngularMaterialModule,
+    MovieDetailsComponent
   ]
 })
 export class MoviesModule { }

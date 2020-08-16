@@ -1,16 +1,29 @@
-<div *ngIf="movie$ | async as movie">
-  <div>{{movie.name}}</div>
+<div *ngIf="movie$ | async as movie" class="details-card">
   <div>
-    <span class="material-icons-outlined" [ngClass]="{'favourite': inFavourites}" (click)="updateFavourite(movie.id)">
-      grade
-    </span>
+    <div style="    display: flex;
+    align-items: center;">
+      <span>{{movie.name}}</span>
+      <span class="favourite-button material-icons-outlined" [ngClass]="{'favourite': inFavourites}" (click)="updateFavourite(movie.id)">
+        grade
+      </span>
+    </div>
+    <div style="
+    display: flex;
+    justify-content: flex-end;">Duration: {{movie.length}}</div>
   </div>
-  <div>{{movie.description}}</div>
-  <div>{{movie.genres}}</div>
-  <div>{{movie.rate}}</div>
-  <div>{{movie.length}}</div>
-  <div>
-    <img [src]="movie.img" [alt]="movie.name">
+  <div class="card-content">
+    <div>
+      <img class="details-image" [src]="movie.img" [alt]="movie.name">
+    </div>
+    <div>
+      <div>Movie description: {{movie.description}}</div>
+      <div>Genre: {{movie.genres}}</div>
+      <div>Rating: {{movie.rate}}</div>
+    </div>
+    <div>
+      <button mat-button (click)="backToMovies(movie)">
+        BACK TO MOVIES
+      </button>
+    </div>
   </div>
-  <p (click)="backToMovies(movie)">Back</p>
 </div>

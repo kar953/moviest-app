@@ -1,8 +1,7 @@
 import { Component, OnInit, Input, ChangeDetectionStrategy } from '@angular/core';
-import { Movie } from '../../models/movie.model';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { Observable } from 'rxjs';
-import { MoviesService } from '../../services/movies.service';
+import { Movie } from '../../../models/movie.model';
 
 @Component({
   selector: 'app-movie-item',

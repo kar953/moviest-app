@@ -36,7 +36,7 @@ export class MovieDetailsComponent extends BaseComponentDirective implements OnI
   public backToMovies(movie: Movie): void {
     const movieId = movie ? movie.id : null;
 
-    this.router.navigate([`/movies`]);
+    this.router.navigate([`/movies/moviesList`]);
   }
 
   public checkIfInFavourites(id: number): void {

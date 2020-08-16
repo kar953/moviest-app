@@ -1,13 +1,25 @@
-  <mat-form-field>
+<div class="form-field-wrapper">
+  <mat-form-field class="form-field">
+    <!-- keydown.enter & trigger.closePanel are for hiding options panel when user filled in the input but didn't choose any recor -->
+    <!-- on keyup event (showOptions) show options panel - when there is at least one letter in the input -->
     <input autofocus class="search" type="text" placeholder="Find movie" matInput [formControl]="moviesControl" [matAutocomplete]="auto"
       #trigger="matAutocompleteTrigger" (keydown.enter)="$event.target.blur(); trigger.closePanel()" (keyup)="showOptions($event)">
     <mat-autocomplete #auto="matAutocomplete">
-      <mat-option *ngFor="let movie of filteredMovies | async" [value]="movie.name" (click)="goToDetails(movie)" (onSelectionChange)="goToDetails(movie)"
-      [ngClass]="{'hide-autocomplete': !showAutocomplete}">
+      <mat-option *ngFor="let movie of filteredMovies$ | async" [value]="movie.name" (click)="goToDetails(movie)" (onSelectionChange)="goToDetails(movie)"
+        [ngClass]="{'hide-autocomplete': !showAutocomplete}">
         {{movie.name}}
       </mat-option>
     </mat-autocomplete>
   </mat-form-field>
-  <div *ngFor="let movie of filteredMovies | async">
+</div>
+<div style="align-self: center;">
+  <mat-chip-list multiple aria-label="Filter selection">
+    <mat-chip (click)="onFilterChange(genreType.action)" [selected]="selectedActionGenre">Action</mat-chip>
+    <mat-chip (click)="onFilterChange('favourites')" [selected]="selectedFavourites">Favourites</mat-chip>
+  </mat-chip-list>
+</div>
+<mat-grid-list style="width:80%; margin: auto" cols="4">
+  <mat-grid-tile *ngFor="let movie of filteredMovies$ | async">
     <app-movie-item (click)="goToDetails(movie)" (keydown.enter)="goToDetails(movie)" [movie]="movie" tabindex="1"></app-movie-item>
-  </div>
+  </mat-grid-tile>
+</mat-grid-list>

@@ -1,0 +1,14 @@
+:host {
+  &:hover {
+    transform: scale(1.1);
+  }
+  .movie-title {
+    font-size: 0.9vw;
+    text-align: center;
+    color: rgba(0,0,0,.54)
+  }
+  .movie-image {
+    max-width: 100%;
+    height: auto;
+  }
+}
