@@ -30,6 +30,7 @@ export class MoviesListComponent implements OnInit {
   public favouriteChip = 'favourites';
   public genreType = genreType;
   public resetAll = '';
+  public movie: Movie;
 
   private _filter(value: string): Movie[] {
     const filterValue = value.toLowerCase();
@@ -70,11 +71,9 @@ export class MoviesListComponent implements OnInit {
         this.selectedFavourites = !this.selectedFavourites;
         break;
       case this.resetAll:
-        if ( this.selectedFavourites && this.selectedGenreAction && this.selectedGenreAdventure ){
-          this.selectedFavourites = false;
-          this.selectedGenreAction = false;
-          this.selectedGenreAdventure = false;
-        }
+        this.selectedFavourites = false;
+        this.selectedGenreAction = false;
+        this.selectedGenreAdventure = false;
         break;
       default:
         break;
