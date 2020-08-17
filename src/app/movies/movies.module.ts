@@ -6,7 +6,7 @@ import { MovieItemComponent } from './movies-list/movie-item/movie-item.componen
 import { RouterModule } from '@angular/router';
 
 const routes = [
-  { path: '', component: MoviesListComponent },
+  { path: '', redirectTo: 'moviesList', pathMatch: 'full' },
   { path: 'moviesList', component: MoviesListComponent },
   { path: 'movie/:id', component: MovieDetailsComponent }
 ];

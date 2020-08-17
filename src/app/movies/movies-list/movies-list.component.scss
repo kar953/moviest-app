@@ -3,12 +3,24 @@
   flex-direction: column;
 }
 
-.hide-autocomplete { display: none; }
-.form-field-wrapper {
-  margin: 0 auto;
-  width: 60%;
-  .form-field {
-    width: 100%
+  .hide-autocomplete {
+    display: none;
   }
+
+  .form-field-wrapper {
+    margin: 0 auto;
+    width: 60%;
+
+    .form-field {
+      width: 100%
+    }
+  }
+
+.form-field-chip {
+  align-self: center;
 }
 
+.form-grid {
+  width:80%;
+  margin: auto;
+}

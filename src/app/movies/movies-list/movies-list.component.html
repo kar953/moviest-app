@@ -12,13 +12,13 @@
     </mat-autocomplete>
   </mat-form-field>
 </div>
-<div style="align-self: center;">
+<div class="form-field-chip">
   <mat-chip-list multiple aria-label="Filter selection">
     <mat-chip (click)="onFilterChange(genreType.action)" [selected]="selectedActionGenre">Action</mat-chip>
     <mat-chip (click)="onFilterChange('favourites')" [selected]="selectedFavourites">Favourites</mat-chip>
   </mat-chip-list>
 </div>
-<mat-grid-list style="width:80%; margin: auto" cols="4">
+<mat-grid-list class="form-grid" cols="4">
   <mat-grid-tile *ngFor="let movie of filteredMovies$ | async">
     <app-movie-item (click)="goToDetails(movie)" (keydown.enter)="goToDetails(movie)" [movie]="movie" tabindex="1"></app-movie-item>
   </mat-grid-tile>
