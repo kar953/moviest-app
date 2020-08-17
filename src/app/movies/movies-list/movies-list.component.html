@@ -1,4 +1,7 @@
 <div class="form-field-wrapper">
+    <div class="moviest-logo">
+        <img src="../../../assets/moviest-logo.png" alt="Moviest best movies">
+    </div>
   <mat-form-field class="form-field">
     <!-- keydown.enter & trigger.closePanel are for hiding options panel when user filled in the input but didn't choose any recor -->
     <!-- on keyup event (showOptions) show options panel - when there is at least one letter in the input -->
@@ -14,8 +17,10 @@
 </div>
 <div class="form-field-chip">
   <mat-chip-list multiple aria-label="Filter selection">
-    <mat-chip (click)="onFilterChange(genreType.action)" [selected]="selectedActionGenre">Action</mat-chip>
-    <mat-chip (click)="onFilterChange('favourites')" [selected]="selectedFavourites">Favourites</mat-chip>
+    <mat-chip (click)="onFilterChange(genreType.action)" [selected]="selectedGenreAction">Action</mat-chip>
+    <mat-chip (click)="onFilterChange(genreType.adventure)" [selected]="selectedGenreAdventure">Adventure</mat-chip>
+    <mat-chip (click)="onFilterChange(favouriteChip)" [selected]="selectedFavourites">Favourites</mat-chip>
+    <mat-chip (click)="onFilterChange('')" [selected]="resetAll">X Reset All</mat-chip>
   </mat-chip-list>
 </div>
 <mat-grid-list class="form-grid" cols="4">

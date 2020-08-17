@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ViewChildren, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable, merge } from 'rxjs';
 import { map, startWith, filter, combineAll, combineLatest, withLatestFrom } from 'rxjs/operators';
@@ -22,19 +22,21 @@ export class MoviesListComponent implements OnInit {
   public filteredMoviesInitial$: Observable<Movie[]>;
   public movies: Movie[];
   public showAutocomplete = false;
-  public selectedActionGenre = false;
+  public selectedGenreAction = false;
+  public selectedGenreAdventure = false;
   public selectedFavourites = false;
-  public filteredMovies = [];
+  public filteredMovies: Movie[] = [];
   public favouriteMoviesSelector$ = this.store.pipe(select(AppSelectors.getMoviesWithFavouriteStatus));
-
+  public favouriteChip = 'favourites';
   public genreType = genreType;
+  public resetAll = '';
 
   private _filter(value: string): Movie[] {
     const filterValue = value.toLowerCase();
     return this.movies.filter(movie => (movie.name).toLowerCase().startsWith(filterValue));
   }
 
-  constructor(private router: Router, private moviesService: MoviesService,  private store: Store<AppState>) { }
+  constructor(private router: Router, private moviesService: MoviesService, private store: Store<AppState>) { }
 
   ngOnInit(): void {
     this.moviesService.getMovies().subscribe(res => this.movies = res);
@@ -59,10 +61,20 @@ export class MoviesListComponent implements OnInit {
   public onFilterChange(event): void {
     switch (event) {
       case genreType.action:
-        this.selectedActionGenre = !this.selectedActionGenre;
+        this.selectedGenreAction = !this.selectedGenreAction;
         break;
-      case 'favourites':
+      case genreType.adventure:
+        this.selectedGenreAdventure = !this.selectedGenreAdventure;
+        break;
+      case this.favouriteChip:
         this.selectedFavourites = !this.selectedFavourites;
+        break;
+      case this.resetAll:
+        if ( this.selectedFavourites && this.selectedGenreAction && this.selectedGenreAdventure ){
+          this.selectedFavourites = false;
+          this.selectedGenreAction = false;
+          this.selectedGenreAdventure = false;
+        }
         break;
       default:
         break;
@@ -73,12 +85,17 @@ export class MoviesListComponent implements OnInit {
   private filterMoviesByChips(): void {
     this.moviesControl.setValue('');
     this.filteredMovies$ = this.filteredMoviesInitial$;
-    if (this.selectedActionGenre) {
-      this.filteredMovies$ = this.filteredMovies$.pipe(map(x => x.filter(y => y.genres.includes(genreType.action))));
+    if (this.selectedGenreAction) {
+      this.filteredMovies$ = this.filteredMovies$
+      .pipe(map(movies => movies.filter(action => action.genres.includes(genreType.action))));
+    }
+    if (this.selectedGenreAdventure) {
+      this.filteredMovies$ = this.filteredMovies$
+      .pipe(map(movies => movies.filter(adventure => adventure.genres.includes(genreType.adventure))));
     }
     if (this.selectedFavourites) {
       this.filteredMovies$ = this.filteredMovies$.pipe(withLatestFrom(this.favouriteMoviesSelector$),
-        map(value => value["0"].filter(movie => value["1"].some(x => x.movieId === movie.id))));
+        map(value => value['0'].filter(movie => value['1'].some(x => x.movieId === movie.id))));
     }
   }
 }
