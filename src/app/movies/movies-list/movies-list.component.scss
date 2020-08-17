@@ -1,6 +1,14 @@
 :host {
   display: flex;
   flex-direction: column;
+
+  mat-chip {
+    cursor: pointer;
+  }
+
+  mat-grid-tile {
+    cursor: pointer;
+  }
 }
 
   .hide-autocomplete {
@@ -19,7 +27,6 @@
 .form-field-chip {
   padding: 1.5% 0;
   align-self: center;
-  cursor: pointer;
 }
 
 .form-grid {
@@ -35,8 +42,4 @@
     width: 150px;
     margin: 0 auto;
   }
-}
-
-mat-chip {
-  cursor: pointer;
 }
