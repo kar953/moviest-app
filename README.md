@@ -1,5 +1,6 @@
 # Moviest Best Movies App
 Direct link to the Moviest WebApp --> https://moviest-movies-app.000webhostapp.com/
+(Page has to be opened directly with this link because domain 000webhostapp doesn't support refresh with Angular routing)
 
 Moviest is an app that provides only blockbuster movies! 
 Our advanced algorithms are searching for the most popular 
