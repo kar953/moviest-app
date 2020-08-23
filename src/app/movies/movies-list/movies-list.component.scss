@@ -53,4 +53,10 @@
   justify-content: center;
   align-items: center;
   height: calc(80vh);
+  display: flex;
+  font-size: 1.5em;
+  flex-direction: column;
+  p {
+    color: rgb(63, 81, 181);
+  }
 }

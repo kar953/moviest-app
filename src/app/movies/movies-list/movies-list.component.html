@@ -36,5 +36,6 @@
   </div>
 </ng-container>
 <div *ngIf="isLoading$ | async" class="spinner">
+  <p>{{loadingMessage}}</p>
   <mat-spinner></mat-spinner>
 </div>

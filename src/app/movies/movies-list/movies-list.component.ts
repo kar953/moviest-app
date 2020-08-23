@@ -30,6 +30,7 @@ export class MoviesListComponent implements OnInit, OnDestroy {
   public movie: Movie;
   public genreFilterStatus: GenreFilterStatus[] = genreFilterStatusList;
   public isLoading$: Observable<boolean> = this.moviesFeatureService.isLoading$;
+  public loadingMessage = 'We are loading movies for you. Please wait...';
 
   private _filter(value: string): Movie[] {
     const filterValue = value.toLowerCase();
