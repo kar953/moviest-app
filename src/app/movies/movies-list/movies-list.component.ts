@@ -3,12 +3,13 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Observable, merge } from 'rxjs';
 import { map, startWith, filter, combineAll, combineLatest, withLatestFrom } from 'rxjs/operators';
 import { Movie } from '../../models/movie.model';
-import { MoviesService } from '../../services/movies.service';
+import { MoviesFeatureService } from '../../services/movies.service';
 import { FormControl } from '@angular/forms';
 import { genreType } from '../../models/genre-type.model';
 import { Store, select } from '@ngrx/store';
-import { AppState } from '../../app.state';
-import * as AppSelectors from '../selectors/favourite-movies.selector';
+import { MoviesAppState, MoviesFeatureSubState } from '../../app.state';
+import { FavouriteMoviesFeatureSelectors } from '../../selectors/feature-selectors/favourite-movies.selector';
+import { MoviesAppSelectors } from '../../selectors/movies-app.selector';
 
 @Component({
   selector: 'app-movies-list',
@@ -26,7 +27,8 @@ export class MoviesListComponent implements OnInit {
   public selectedGenreAdventure = false;
   public selectedFavourites = false;
   public filteredMovies: Movie[] = [];
-  public favouriteMoviesSelector$ = this.store.pipe(select(AppSelectors.getMoviesWithFavouriteStatus));
+  public favouriteMoviesSelector$ = this.store.pipe(select(MoviesAppSelectors.FavouriteMoviesFeatureState),
+    select(FavouriteMoviesFeatureSelectors.favouriteMovies));
   public favouriteChip = 'favourites';
   public genreType = genreType;
   public resetAll = '';
@@ -34,19 +36,33 @@ export class MoviesListComponent implements OnInit {
 
   private _filter(value: string): Movie[] {
     const filterValue = value.toLowerCase();
+    console.log('_filter', this.movies);
     return this.movies.filter(movie => (movie.name).toLowerCase().startsWith(filterValue));
   }
 
-  constructor(private router: Router, private moviesService: MoviesService, private store: Store<AppState>) { }
+  constructor(private router: Router,
+              private moviesFeatureService: MoviesFeatureService,
+              private store: Store<MoviesAppState>) {
+  }
 
   ngOnInit(): void {
-    this.moviesService.getMovies().subscribe(res => this.movies = res);
+    this.moviesFeatureService.loadMovies();
+    this.loadMovies();
 
     this.filteredMoviesInitial$ = this.filteredMovies$ = this.moviesControl.valueChanges
       .pipe(
         startWith(''),
         map(value => this._filter(value))
       );
+  }
+
+  public loadMovies(): void {
+    this.moviesFeatureService.movies$.subscribe((movies: Movie[]) =>
+      {
+        console.log('LoadMovies()', movies);
+        this.movies = movies;
+      }
+    );
   }
 
   public goToDetails(movie: Movie): void {

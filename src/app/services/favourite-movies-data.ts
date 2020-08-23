@@ -1,6 +1,6 @@
 import { FavouriteMovie } from '../models/favourite-movie.model';
 
-export const FAVOURITES: FavouriteMovie[] = [
+export const FAVOURITE_MOVIES: FavouriteMovie[] = [
   {
     movieId: 2,
     inFavourites: true

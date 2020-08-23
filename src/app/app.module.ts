@@ -10,6 +10,10 @@ import { StoreModule } from '@ngrx/store';
 import { favouriteMoviesReducer } from './reducers/favourite-movies.reducer';
 import { SharedModule } from './shared/shared-module.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { EffectsModule } from '@ngrx/effects';
+import { MoviesEffects } from './effects/movies.effects';
+import { moviesReducer } from './reducers/movies.reducer';
+import { reducers } from './app.state';
 
 @NgModule({
   declarations: [
@@ -19,9 +23,12 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
-    StoreModule.forRoot({
-      favouriteMovies: favouriteMoviesReducer,
-    })
+    StoreModule.forRoot(
+      reducers
+    ),
+    EffectsModule.forRoot([
+      MoviesEffects
+    ])
   ],
   providers: [],
   bootstrap: [AppComponent]

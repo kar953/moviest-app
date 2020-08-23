@@ -1,35 +1,31 @@
-<div *ngIf="movie$ | async as movie" class="details-card">
-  <div class="moviest-logo">
-    <img src="../../../assets/moviest-logo.png" alt="Moviest best movies" (click)="backToMovies()">
-  </div>
-  <div class="card-content">
-    <div>
-      <img class="details-card-image" [src]="movie.img" [alt]="movie.name">
+<div *ngIf="movie$ | async as movie" class="containter">
+  <div class="card">
+    <img style="width: 98%;" src="../../../assets/moviest-logo.png" alt="Moviest best movies" (click)="backToMovies()">
+    <div class="head">
+
     </div>
-    <div class="details-card-info">
-      <div class="details-card-header">
-        <div>{{movie.name}}</div>
-      </div>
-      <div>
-        <span class="details-card-info">Duration:</span> {{movie.length}}
-      </div>
-      <div>
-        <span>Movie description:</span> {{movie.description}}</div>
-      <div>
-        <span>Genre:</span> {{movie.genres}}</div>
-      <div>
-        <span>Rating:</span> {{movie.rate}}</div>
+    <div class="product">
+      <img [src]="movie.img" [alt]="movie.name" height="200">
     </div>
-    <span class="favourite-button material-icons-outlined" [ngClass]="{'favourite': inFavourites}" (click)="updateFavourite(movie.id)">
-        thumb_up_alt
-      </span>
-    <div>
-      <button class="details-card-button" mat-button (click)="backToMovies()">
-        <span class="material-icons">
-          arrow_back
+    <div class="text">
+      <div class="title">
+        <h2>{{movie.name}}</h2>
+        <p>Duration: {{movie.length}}</p>
+        <p>Movie description: {{movie.description}}</p>
+        <p>Genres: {{movie.genres}}</p>
+        <p>Rating: {{movie.rate}}</p>
+      </div>
+      <div class="favourite">
+        <span class="material-icons-outlined" style="cursor: pointer" [ngClass]="{'inFavourites': inFavourites}" (click)="updateFavourite(movie.id)">
+          thumb_up_alt
         </span>
-        BACK TO MOVIES
-      </button>
-    </div>
+      </div>
+      <div class="footer">
+        <div class="action">
+          <button (click)="backToMovies()">
+            BACK TO MOVIES
+          </button>
+        </div>
+      </div>
   </div>
 </div>

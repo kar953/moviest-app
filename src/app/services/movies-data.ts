@@ -1,7 +1,7 @@
 import { Movie } from '../models/movie.model';
 import { genreType } from '../models/genre-type.model';
 
-export const MOVIES = [
+export const MOVIES: Movie[] = [
   {
     id: 1,
     key: 'deadpool',
