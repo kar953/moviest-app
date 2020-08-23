@@ -10,6 +10,7 @@ import { Store, select } from '@ngrx/store';
 import { MoviesAppState, MoviesFeatureSubState } from '../../app.state';
 import { FavouriteMoviesFeatureSelectors } from '../../selectors/feature-selectors/favourite-movies.selector';
 import { MoviesAppSelectors } from '../../selectors/movies-app.selector';
+import { FavouriteMoviesService } from '../../services/favourite-movies.service';
 
 @Component({
   selector: 'app-movies-list',
@@ -25,8 +26,7 @@ export class MoviesListComponent implements OnInit, OnDestroy {
   public showAutocomplete = false;
   public selectedFavourites = false;
   public filteredMovies: Movie[] = [];
-  public favouriteMoviesSelector$ = this.store.pipe(select(MoviesAppSelectors.FavouriteMoviesFeatureState),
-    select(FavouriteMoviesFeatureSelectors.favouriteMovies));
+  public favouriteMoviesSelector$ = this.favouriteMoviesFeatureService.favouriteMoviesSelector$;
   public movie: Movie;
   public genreFilterStatus: GenreFilterStatus[] = genreFilterStatusList;
   public isLoading$: Observable<boolean> = this.moviesFeatureService.isLoading$;
@@ -37,8 +37,9 @@ export class MoviesListComponent implements OnInit, OnDestroy {
   }
 
   constructor(private router: Router,
-              private moviesFeatureService: MoviesFeatureService,
-              private store: Store<MoviesAppState>) {
+    private moviesFeatureService: MoviesFeatureService,
+    private favouriteMoviesFeatureService: FavouriteMoviesService,
+    private store: Store<MoviesAppState>) {
   }
 
   ngOnInit(): void {
@@ -81,34 +82,45 @@ export class MoviesListComponent implements OnInit, OnDestroy {
   }
 
   public onOtherFilterChange(filterType: string): void {
-    this.refreshFiltersPipes();
     switch (filterType) {
       case 'reset':
         this.resetChipsFilter();
+        this.refreshFiltersPipes();
         break;
       case 'favourite':
         this.selectedFavourites = !this.selectedFavourites;
-        if (this.selectedFavourites) {this.filteredMovies$ = this.filteredMovies$.pipe(withLatestFrom(this.favouriteMoviesSelector$),
-          map(value => value['0'].filter(movie => value['1'].some(x => x.movieId === movie.id))));
+        if (this.selectedFavourites) {
+          this.setFavouritesFilter();
+        } else {
+          this.refreshFiltersPipes();
+          this.filterMoviesByChips();
         }
     }
   }
 
-  private filterMoviesByChips(): void {
-    this.refreshFiltersPipes();
-    this.genreFilterStatus.filter(genreFilter => genreFilter.filterActive === true).map(
-      genreFilter => this.filteredMovies$ = this.filteredMovies$
-        .pipe(map(movies => movies.filter(action => action.genres.includes(genreFilter.genreType)))));
-  }
-
-  private refreshFiltersPipes(): void {
+  public refreshFiltersPipes(): void {
     this.moviesControl.setValue('');
     this.filteredMovies$ = this.filteredMoviesInitial$;
   }
 
-  private resetChipsFilter(): void {
+  public resetChipsFilter(): void {
     this.genreFilterStatus.map(movie => movie.filterActive = false);
     this.selectedFavourites = false;
+  }
+
+  private setFavouritesFilter(): void {
+    this.filteredMovies$ = this.filteredMovies$.pipe(withLatestFrom(this.favouriteMoviesSelector$),
+      map(value => value['0'].filter(movie => value['1'].some(x => x.movieId === movie.id))));
+  }
+
+  private filterMoviesByChips(): void {
+    this.refreshFiltersPipes();
+    if (this.selectedFavourites) {
+      this.setFavouritesFilter();
+    }
+    this.genreFilterStatus.filter(genreFilter => genreFilter.filterActive === true).map(
+      genreFilter => this.filteredMovies$ = this.filteredMovies$
+        .pipe(map(movies => movies.filter(action => action.genres.includes(genreFilter.genreType)))));
   }
 
   ngOnDestroy(): void {

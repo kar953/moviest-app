@@ -4,6 +4,7 @@ import { MovieDetailsComponent } from './movie-details/movie-details.component';
 import { SharedModule } from '../shared/shared-module.module';
 import { MovieItemComponent } from './movies-list/movie-item/movie-item.component';
 import { RouterModule } from '@angular/router';
+import { NoDataComponent } from './movies-list/no-data/no-data.component';
 
 const routes = [
   { path: '', redirectTo: 'moviesList', pathMatch: 'full' },
@@ -15,7 +16,8 @@ const routes = [
   declarations: [
     MovieItemComponent,
     MoviesListComponent,
-    MovieDetailsComponent
+    MovieDetailsComponent,
+    NoDataComponent
   ],
   imports: [
     SharedModule,

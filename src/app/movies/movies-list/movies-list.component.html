@@ -32,7 +32,7 @@
   </mat-grid-list>
 
   <div *ngIf="(filteredMovies$ | async).length === 0">
-    No Movies Found :(
+    <app-no-data></app-no-data>
   </div>
 </ng-container>
 <div *ngIf="isLoading$ | async" class="spinner">
