@@ -17,15 +17,24 @@
 </div>
 <div class="form-field-chip">
   <mat-chip-list multiple aria-label="Filter selection" *ngFor="let genre of genreFilterStatus">
-    <mat-chip (click)="onFilterChange({filterType: genre.genreType, filterActive: !genre.filterActive})" [selected]="genre.filterActive">{{genre.genreType}}</mat-chip>
+    <mat-chip (click)="onGenreFilterChange({filterType: genre.genreType, filterActive: !genre.filterActive})" [selected]="genre.filterActive">{{genre.genreType}}</mat-chip>
   </mat-chip-list>
   <mat-chip-list multiple aria-label="Filter selection">
-    <mat-chip (click)="onFilterChange({filterType: 'favourite', filterActive: false})" [selected]="selectedFavourites">Favourites</mat-chip>
-    <mat-chip (click)="onFilterChange({filterType: 'reset', filterActive: false})" [selected]="true">X Reset Filter</mat-chip>
+    <mat-chip (click)="onOtherFilterChange('favourite')" [selected]="selectedFavourites">Favourites</mat-chip>
+    <mat-chip (click)="onOtherFilterChange('reset')" [selected]="true">X Reset Filter</mat-chip>
   </mat-chip-list>
 </div>
-<mat-grid-list class="form-grid" cols="4">
-  <mat-grid-tile *ngFor="let movie of filteredMovies$ | async">
-    <app-movie-item (click)="goToDetails(movie)" (keydown.enter)="goToDetails(movie)" [movie]="movie" tabindex="1"></app-movie-item>
-  </mat-grid-tile>
-</mat-grid-list>
+<ng-container *ngIf="!(isLoading$ | async)">
+  <mat-grid-list class="form-grid" cols="4" *ngIf="(filteredMovies$ | async).length > 0">
+    <mat-grid-tile *ngFor="let movie of filteredMovies$ | async">
+      <app-movie-item (click)="goToDetails(movie)" (keydown.enter)="goToDetails(movie)" [movie]="movie" tabindex="1"></app-movie-item>
+    </mat-grid-tile>
+  </mat-grid-list>
+
+  <div *ngIf="(filteredMovies$ | async).length === 0">
+    No Movies Found :(
+  </div>
+</ng-container>
+<div *ngIf="isLoading$ | async" class="spinner">
+  <mat-spinner></mat-spinner>
+</div>

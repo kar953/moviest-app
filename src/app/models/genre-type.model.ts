@@ -2,7 +2,7 @@ export type GenreType = 'action' | 'adventure' | 'biography' | 'comedy' | 'crime
   | 'drama' | 'history' | 'mystery' | 'scifi' | 'sport' | 'thriller';
 
 export interface GenreFilterStatus {
-  genreType: string;
+  genreType: GenreType;
   filterActive: boolean;
 }
 

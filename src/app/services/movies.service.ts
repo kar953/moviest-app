@@ -8,9 +8,9 @@ import { FavouriteMovie } from '../models/favourite-movie.model';
 import { MoviesAppSelectors } from '../selectors/movies-app.selector';
 import { Store, select } from '@ngrx/store';
 import { MoviesAppState, MoviesFeatureSubState } from '../app.state';
-import { loadMovies } from '../actions/favourite-movies.actions';
+import { loadMoviesAction } from '../actions/favourite-movies.actions';
 import { MoviesFeatureSelectors } from '../selectors/feature-selectors/movies.selector';
-import { delay } from 'rxjs/internal/operators';
+import { delay } from 'rxjs/operators';
 
 @Injectable({providedIn: 'root'})
 export class MoviesFeatureService {
@@ -18,10 +18,13 @@ export class MoviesFeatureService {
   public movies$ = this.store.pipe(select(MoviesAppSelectors.MoviesFeatureState),
     select(MoviesFeatureSelectors.movies));
 
+  public isLoading$ = this.store.pipe(select(MoviesAppSelectors.MoviesFeatureState),
+  select(MoviesFeatureSelectors.isLoading));
+
   public constructor( private readonly store: Store<MoviesAppState>) {}
 
-  public loadMovies(): void {
-    this.store.dispatch(loadMovies());
+  public fetchMovies(): void {
+    this.store.dispatch(loadMoviesAction());
   }
 
   getMovie(id: number): Observable<Movie>{
@@ -29,7 +32,9 @@ export class MoviesFeatureService {
   }
 
   getMovies(): Observable <Movie[] > {
-    return of(MOVIES);
+    return of(MOVIES).pipe(
+      delay(2500)
+    );
   }
 }
 

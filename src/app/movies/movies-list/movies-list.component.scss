@@ -47,3 +47,10 @@
     margin: 0 auto;
   }
 }
+
+.spinner {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: calc(80vh);
+}

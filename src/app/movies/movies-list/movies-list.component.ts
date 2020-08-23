@@ -29,10 +29,10 @@ export class MoviesListComponent implements OnInit, OnDestroy {
     select(FavouriteMoviesFeatureSelectors.favouriteMovies));
   public movie: Movie;
   public genreFilterStatus: GenreFilterStatus[] = genreFilterStatusList;
+  public isLoading$: Observable<boolean> = this.moviesFeatureService.isLoading$;
 
   private _filter(value: string): Movie[] {
     const filterValue = value.toLowerCase();
-    console.log('_filter', this.movies);
     return this.movies.filter(movie => (movie.name).toLowerCase().startsWith(filterValue));
   }
 
@@ -42,9 +42,19 @@ export class MoviesListComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.moviesFeatureService.loadMovies();
-    this.loadMovies();
+    this.moviesFeatureService.fetchMovies();
+    this.registerOnLoadMovies();
+  }
 
+  public registerOnLoadMovies(): void {
+    this.moviesFeatureService.movies$.subscribe((movies: Movie[]) => {
+      this.movies = movies;
+      this.registerFiltering();
+    }
+    );
+  }
+
+  public registerFiltering(): void {
     this.filteredMoviesInitial$ = this.filteredMovies$ = this.moviesControl.valueChanges
       .pipe(
         startWith(''),
@@ -52,17 +62,8 @@ export class MoviesListComponent implements OnInit, OnDestroy {
       );
   }
 
-  public loadMovies(): void {
-    this.moviesFeatureService.movies$.subscribe((movies: Movie[]) => {
-      console.log('LoadMovies()', movies);
-      this.movies = movies;
-    }
-    );
-  }
-
   public goToDetails(movie: Movie): void {
     this.selectedId = movie ? movie.id : null;
-
     this.router.navigate([`/movies/movie/${this.selectedId}`]);
   }
 
@@ -70,40 +71,47 @@ export class MoviesListComponent implements OnInit, OnDestroy {
     (event.target.value).length > 0 ? this.showAutocomplete = true : this.showAutocomplete = false;
   }
 
-  public onFilterChange(event): void {
+  public onGenreFilterChange(event): void {
     this.genreFilterStatus.map(genre => {
       if (genre.genreType === event.filterType) {
         genre.filterActive = event.filterActive;
       }
     });
-    this.filterMoviesByChips(event.filterType, event.filterActive);
+    this.filterMoviesByChips();
   }
 
-  private filterMoviesByChips(filterType: any, activeFilter: boolean): void {
-    this.moviesControl.setValue('');
-    this.filteredMovies$ = this.filteredMoviesInitial$;
-
-    if (activeFilter === true) {
-      this.filteredMovies$ = this.filteredMovies$
-        .pipe(map(movies => movies.filter(action => action.genres.includes(filterType))));
-    }
-
+  public onOtherFilterChange(filterType: string): void {
+    this.refreshFiltersPipes();
     switch (filterType) {
       case 'reset':
-        this.resetFilter();
+        this.resetChipsFilter();
         break;
       case 'favourite':
-        this.resetFilter();
-        this.filteredMovies$ = this.filteredMovies$.pipe(withLatestFrom(this.favouriteMoviesSelector$),
+        this.selectedFavourites = !this.selectedFavourites;
+        if (this.selectedFavourites) {this.filteredMovies$ = this.filteredMovies$.pipe(withLatestFrom(this.favouriteMoviesSelector$),
           map(value => value['0'].filter(movie => value['1'].some(x => x.movieId === movie.id))));
+        }
     }
   }
 
-  private resetFilter(): void {
+  private filterMoviesByChips(): void {
+    this.refreshFiltersPipes();
+    this.genreFilterStatus.filter(genreFilter => genreFilter.filterActive === true).map(
+      genreFilter => this.filteredMovies$ = this.filteredMovies$
+        .pipe(map(movies => movies.filter(action => action.genres.includes(genreFilter.genreType)))));
+  }
+
+  private refreshFiltersPipes(): void {
+    this.moviesControl.setValue('');
+    this.filteredMovies$ = this.filteredMoviesInitial$;
+  }
+
+  private resetChipsFilter(): void {
     this.genreFilterStatus.map(movie => movie.filterActive = false);
+    this.selectedFavourites = false;
   }
 
   ngOnDestroy(): void {
-    this.resetFilter();
+    this.resetChipsFilter();
   }
 }
