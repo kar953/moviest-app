@@ -26,7 +26,11 @@
 
 .form-field-chip {
   padding: 1.5% 0;
+  display: flex;
+  flex-wrap: wrap;
+  align-content: space-around;
   align-self: center;
+  margin-left: 5%;
 }
 
 .form-grid {
